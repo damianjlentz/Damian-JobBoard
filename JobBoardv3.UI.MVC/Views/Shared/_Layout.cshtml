@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*@Html.ActionLink("Application name", "Index", "Home", null, new { @class = "navbar-brand" })*@
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a class="nav-link">@Html.ActionLink("Home", "Index", "Home")</a></li>
+                    <li><a class="nav-link">@Html.ActionLink("About", "About", "Home")</a></li>
+                    @*<li><a class="nav-link">@Html.ActionLink("Position Listings", "PositionListing", "Home")</a></li>*@
+
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li><a class="nav-link">@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</a></li>
+                        <li><a class="nav-link">@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</a></li>
+                        <li><a class="nav-link">@Html.ActionLink("Positions", "Index", 
+                         "Positions")</a></li>
+                    }
+                    <li><a class="nav-link">@Html.ActionLink("Available Positions", "Index", 
+                         "OpenPositions")</a></li>
+                    <li><a class="nav-link">@Html.Partial("_LoginPartial")</a></li>
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <!-- Footer -->
+        <footer class="py-5 bg-dark">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+            </div>
+            <!-- /.container -->
+        </footer>
+        <!-- Bootstrap core JavaScript -->
+        <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+        <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
