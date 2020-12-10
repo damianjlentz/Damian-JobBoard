@@ -27,10 +27,11 @@
 
                     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <li><a class="nav-link">@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</a></li>
-                        <li><a class="nav-link">@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</a></li>
+                        <li><a class="nav-link">@Html.ActionLink("Roles Admin", "Index", "RolesAdmin")</a></li>
+                        <li><a class="nav-link">@Html.ActionLink("Users Admin", "Index", "UsersAdmin")</a></li>
                         <li><a class="nav-link">@Html.ActionLink("Positions", "Index", 
                          "Positions")</a></li>
+                         <li><a class="nav-link">@Html.ActionLink("Applications", "Index", "Applications")</a></li>
                     }
                     <li><a class="nav-link">@Html.ActionLink("Available Positions", "Index", 
                          "OpenPositions")</a></li>

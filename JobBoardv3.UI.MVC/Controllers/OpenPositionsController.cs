@@ -37,7 +37,7 @@ namespace JobBoardv3.UI.MVC.Controllers
         }
 
         // GET: OpenPositions/Create
-        [Authorize = "Admin"]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.LocationId = new SelectList(db.Locations, "LocationId", "StoreNumber");
@@ -50,6 +50,7 @@ namespace JobBoardv3.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "OpenPositionId,PositionId,LocationId")] OpenPosition openPosition)
         {
             if (ModelState.IsValid)
@@ -65,6 +66,7 @@ namespace JobBoardv3.UI.MVC.Controllers
         }
 
         // GET: OpenPositions/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -86,6 +88,7 @@ namespace JobBoardv3.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "OpenPositionId,PositionId,LocationId")] OpenPosition openPosition)
         {
             if (ModelState.IsValid)
@@ -100,6 +103,7 @@ namespace JobBoardv3.UI.MVC.Controllers
         }
 
         // GET: OpenPositions/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -117,6 +121,7 @@ namespace JobBoardv3.UI.MVC.Controllers
         // POST: OpenPositions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             OpenPosition openPosition = db.OpenPositions.Find(id);
@@ -124,6 +129,29 @@ namespace JobBoardv3.UI.MVC.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        ////apply functionality Get
+        //ViewBag.ApplicationStatus = new SelectList(db.ApplicationStatus, "ApplicationStatusId", "StatusName");
+        //ViewBag.OpenPositionId = new SelectList(db.OpenPositions, "OpenPositionId", "OpenPositionId");
+        //ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName");
+        //    return View();
+
+        ////apply functionality Post
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Apply([Bind(Include = "OpenPositionId,PositionId,LocationId")] OpenPosition openPosition)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.OpenPositions.Add(openPosition);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    ViewBag.LocationId = new SelectList(db.Locations, "LocationId", "StoreNumber", openPosition.LocationId);
+        //    ViewBag.PositionId = new SelectList(db.Positions, "PositionId", "Title", openPosition.PositionId);
+        //    return View(openPosition);
+        //}
 
         protected override void Dispose(bool disposing)
         {
