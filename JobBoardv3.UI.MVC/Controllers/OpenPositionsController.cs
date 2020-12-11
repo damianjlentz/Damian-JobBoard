@@ -37,7 +37,7 @@ namespace JobBoardv3.UI.MVC.Controllers
         }
 
         // GET: OpenPositions/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         public ActionResult Create()
         {
             ViewBag.LocationId = new SelectList(db.Locations, "LocationId", "StoreNumber");
@@ -50,7 +50,7 @@ namespace JobBoardv3.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manageer")]
         public ActionResult Create([Bind(Include = "OpenPositionId,PositionId,LocationId")] OpenPosition openPosition)
         {
             if (ModelState.IsValid)
@@ -66,7 +66,7 @@ namespace JobBoardv3.UI.MVC.Controllers
         }
 
         // GET: OpenPositions/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -88,7 +88,7 @@ namespace JobBoardv3.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         public ActionResult Edit([Bind(Include = "OpenPositionId,PositionId,LocationId")] OpenPosition openPosition)
         {
             if (ModelState.IsValid)

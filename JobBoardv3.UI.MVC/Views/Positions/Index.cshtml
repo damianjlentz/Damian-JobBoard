@@ -5,11 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="topstyle">Positions</h2>
 
+@if (Request.IsAuthenticated && User.IsInRole("Admin"))
+{
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+}
 <table class="table">
     <tr>
         <th>
@@ -21,7 +24,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
@@ -29,12 +33,23 @@
         <td>
             @Html.DisplayFor(modelItem => item.JobDescription)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PositionId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PositionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PositionId })
-        </td>
+
+        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PositionId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.PositionId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.PositionId })
+            </td>
+        }
+
+        @if (Request.IsAuthenticated && User.IsInRole("Manager"))
+        {
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.PositionId })
+            </td>
+        }
     </tr>
-}
+    }
 
 </table>

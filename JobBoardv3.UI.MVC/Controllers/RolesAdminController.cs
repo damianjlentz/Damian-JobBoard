@@ -54,6 +54,7 @@ namespace IdentitySample.Controllers
         //
         // GET: /Roles/
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(RoleManager.Roles);
@@ -62,6 +63,7 @@ namespace IdentitySample.Controllers
         //
         // GET: /Roles/Details/5
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Details(string id)
         {
             if (id == null)
@@ -89,6 +91,7 @@ namespace IdentitySample.Controllers
         //
         // GET: /Roles/Create
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -98,6 +101,7 @@ namespace IdentitySample.Controllers
         // POST: /Roles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create(RoleViewModel roleViewModel)
         {
             if (ModelState.IsValid)
@@ -117,6 +121,7 @@ namespace IdentitySample.Controllers
         //
         // GET: /Roles/Edit/Admin
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
@@ -137,6 +142,7 @@ namespace IdentitySample.Controllers
         [HttpPost]
 
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit([Bind(Include = "Name,Id")] RoleViewModel roleModel)
         {
             if (ModelState.IsValid)
@@ -152,6 +158,7 @@ namespace IdentitySample.Controllers
         //
         // GET: /Roles/Delete/5
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
@@ -171,6 +178,7 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteConfirmed(string id, string deleteUser)
         {
             if (ModelState.IsValid)

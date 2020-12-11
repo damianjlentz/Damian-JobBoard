@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="JobBoardModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="JobBoardModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -26,6 +26,8 @@
           <Property Name="ManagerNotes" Type="varchar" MaxLength="2000" />
           <Property Name="ApplicationStatus" Type="int" Nullable="false" />
           <Property Name="ResumeFileName" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ApplicationStatus">
           <Key>
@@ -85,6 +87,8 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Locations">
           <Key>
@@ -112,15 +116,6 @@
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="JobDescription" Type="varchar(max)" />
         </EntityType>
-        <EntityType Name="UserDetails">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ResumeFilename" Type="nvarchar" MaxLength="75" />
-        </EntityType>
         <Association Name="FK_Applications_ApplicationStatus">
           <End Role="ApplicationStatus" Type="Self.ApplicationStatus" Multiplicity="1" />
           <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
@@ -142,18 +137,6 @@
             </Principal>
             <Dependent Role="Applications">
               <PropertyRef Name="OpenPositionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Applications_UserDetails">
-          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
-          <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserDetails">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Applications">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -213,18 +196,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Locations_UserDetails">
-          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
-          <End Role="Locations" Type="Self.Locations" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserDetails">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Locations">
-              <PropertyRef Name="ManagerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_OpenPositions_Locations">
           <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
           <End Role="OpenPositions" Type="Self.OpenPositions" Multiplicity="*" />
@@ -261,17 +232,12 @@
           <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OpenPositions" EntityType="Self.OpenPositions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Applications_ApplicationStatus" Association="Self.FK_Applications_ApplicationStatus">
             <End Role="ApplicationStatus" EntitySet="ApplicationStatus" />
             <End Role="Applications" EntitySet="Applications" />
           </AssociationSet>
           <AssociationSet Name="FK_Applications_OpenPositions" Association="Self.FK_Applications_OpenPositions">
             <End Role="OpenPositions" EntitySet="OpenPositions" />
-            <End Role="Applications" EntitySet="Applications" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Applications_UserDetails" Association="Self.FK_Applications_UserDetails">
-            <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="Applications" EntitySet="Applications" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -290,10 +256,6 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_Locations_UserDetails" Association="Self.FK_Locations_UserDetails">
-            <End Role="UserDetails" EntitySet="UserDetails" />
-            <End Role="Locations" EntitySet="Locations" />
-          </AssociationSet>
           <AssociationSet Name="FK_OpenPositions_Locations" Association="Self.FK_OpenPositions_Locations">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="OpenPositions" EntitySet="OpenPositions" />
@@ -303,8 +265,7 @@
             <End Role="OpenPositions" EntitySet="OpenPositions" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="JobBoardModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -331,7 +292,8 @@
           <Property Name="ResumeFileName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="ApplicationStatu" Relationship="Self.FK_Applications_ApplicationStatus" FromRole="Applications" ToRole="ApplicationStatus" />
           <NavigationProperty Name="OpenPosition" Relationship="Self.FK_Applications_OpenPositions" FromRole="Applications" ToRole="OpenPositions" />
-          <NavigationProperty Name="UserDetail" Relationship="Self.FK_Applications_UserDetails" FromRole="Applications" ToRole="UserDetails" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ApplicationStatu">
           <Key>
@@ -390,6 +352,8 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -400,7 +364,6 @@
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="State" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="ManagerId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserDetail" Relationship="Self.FK_Locations_UserDetails" FromRole="Locations" ToRole="UserDetails" />
           <NavigationProperty Name="OpenPositions" Relationship="Self.FK_OpenPositions_Locations" FromRole="Locations" ToRole="OpenPositions" />
         </EntityType>
         <EntityType Name="OpenPosition">
@@ -423,17 +386,6 @@
           <Property Name="JobDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="OpenPositions" Relationship="Self.FK_OpenPositions_Positions" FromRole="Positions" ToRole="OpenPositions" />
         </EntityType>
-        <EntityType Name="UserDetail">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ResumeFilename" Type="String" MaxLength="75" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Applications" Relationship="Self.FK_Applications_UserDetails" FromRole="UserDetails" ToRole="Applications" />
-          <NavigationProperty Name="Locations" Relationship="Self.FK_Locations_UserDetails" FromRole="UserDetails" ToRole="Locations" />
-        </EntityType>
         <Association Name="FK_Applications_ApplicationStatus">
           <End Role="ApplicationStatus" Type="Self.ApplicationStatu" Multiplicity="1" />
           <End Role="Applications" Type="Self.Application" Multiplicity="*" />
@@ -455,18 +407,6 @@
             </Principal>
             <Dependent Role="Applications">
               <PropertyRef Name="OpenPositionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Applications_UserDetails">
-          <End Role="UserDetails" Type="Self.UserDetail" Multiplicity="1" />
-          <End Role="Applications" Type="Self.Application" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserDetails">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Applications">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -495,18 +435,6 @@
             </Principal>
             <Dependent Role="AspNetUserLogins">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Locations_UserDetails">
-          <End Role="UserDetails" Type="Self.UserDetail" Multiplicity="1" />
-          <End Role="Locations" Type="Self.Location" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserDetails">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Locations">
-              <PropertyRef Name="ManagerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -549,17 +477,12 @@
           <EntitySet Name="Locations" EntityType="Self.Location" />
           <EntitySet Name="OpenPositions" EntityType="Self.OpenPosition" />
           <EntitySet Name="Positions" EntityType="Self.Position" />
-          <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
           <AssociationSet Name="FK_Applications_ApplicationStatus" Association="Self.FK_Applications_ApplicationStatus">
             <End Role="ApplicationStatus" EntitySet="ApplicationStatus" />
             <End Role="Applications" EntitySet="Applications" />
           </AssociationSet>
           <AssociationSet Name="FK_Applications_OpenPositions" Association="Self.FK_Applications_OpenPositions">
             <End Role="OpenPositions" EntitySet="OpenPositions" />
-            <End Role="Applications" EntitySet="Applications" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Applications_UserDetails" Association="Self.FK_Applications_UserDetails">
-            <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="Applications" EntitySet="Applications" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -569,10 +492,6 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Locations_UserDetails" Association="Self.FK_Locations_UserDetails">
-            <End Role="UserDetails" EntitySet="UserDetails" />
-            <End Role="Locations" EntitySet="Locations" />
           </AssociationSet>
           <AssociationSet Name="FK_OpenPositions_Locations" Association="Self.FK_OpenPositions_Locations">
             <End Role="Locations" EntitySet="Locations" />
@@ -606,6 +525,8 @@
           <EntitySetMapping Name="Applications">
             <EntityTypeMapping TypeName="JobBoardModel1.Application">
               <MappingFragment StoreEntitySet="Applications">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
                 <ScalarProperty Name="OpenPositionId" ColumnName="OpenPositionId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -655,6 +576,8 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="JobBoardModel1.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
@@ -696,16 +619,6 @@
                 <ScalarProperty Name="PositionId" ColumnName="PositionId" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserDetails">
-            <EntityTypeMapping TypeName="JobBoardModel1.UserDetail">
-              <MappingFragment StoreEntitySet="UserDetails">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="ResumeFilename" ColumnName="ResumeFilename" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

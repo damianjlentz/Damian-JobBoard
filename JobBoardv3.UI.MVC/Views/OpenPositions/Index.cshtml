@@ -5,11 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="topstyle">Available Positions</h2>
 
+@if (Request.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Manager")))
+{
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+}
+    
 <table class="table">
     <tr>
         <th>
@@ -21,7 +25,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Location.StoreNumber)
@@ -29,12 +34,32 @@
         <td>
             @Html.DisplayFor(modelItem => item.Position.Title)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.OpenPositionId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.OpenPositionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.OpenPositionId })
-        </td>
+
+        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.OpenPositionId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.OpenPositionId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.OpenPositionId }) |
+                @Html.ActionLink("Apply", "CreateApplication", "Applications", new { id = item.OpenPositionId }, null)
+            </td>
+        }
+
+        @if (Request.IsAuthenticated && User.IsInRole("Manager"))
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.OpenPositionId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.OpenPositionId })
+            </td>
+        }
+
+        @if (Request.IsAuthenticated && User.IsInRole("Employee"))
+        {
+            <td>
+                @Html.ActionLink("Apply", "CreateApplication", "Applications", new { id = item.OpenPositionId }, null)
+            </td>
+        }
     </tr>
-}
+    }
 
 </table>

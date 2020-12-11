@@ -11,7 +11,8 @@ namespace JobBoardv3.DATA.EF
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Location
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,14 +20,16 @@ namespace JobBoardv3.DATA.EF
         {
             this.OpenPositions = new HashSet<OpenPosition>();
         }
-    
+
+        [DisplayName("Location Id")]
         public int LocationId { get; set; }
+        [DisplayName("Store Number")]
         public string StoreNumber { get; set; }
         public string City { get; set; }
         public string State { get; set; }
+        [DisplayName("Manager Id")]
         public int ManagerId { get; set; }
     
-        public virtual UserDetail UserDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OpenPosition> OpenPositions { get; set; }
     }

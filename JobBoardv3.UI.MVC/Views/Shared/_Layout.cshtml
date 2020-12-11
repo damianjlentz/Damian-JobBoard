@@ -7,6 +7,24 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <style>
+        .topstyle {
+            margin-top: 10vh;
+        }
+    
+        .form-container {
+            width: 280px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .emptyLink{
+            display: none !important;
+        }
+    </style>
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -21,21 +39,27 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a class="nav-link">@Html.ActionLink("Home", "Index", "Home")</a></li>
-                    <li><a class="nav-link">@Html.ActionLink("About", "About", "Home")</a></li>
-                    @*<li><a class="nav-link">@Html.ActionLink("Position Listings", "PositionListing", "Home")</a></li>*@
+                    <li><a class="emptyLink">@Html.ActionLink("Home", "Index", "Home")</a></li>
 
                     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <li><a class="nav-link">@Html.ActionLink("Roles Admin", "Index", "RolesAdmin")</a></li>
-                        <li><a class="nav-link">@Html.ActionLink("Users Admin", "Index", "UsersAdmin")</a></li>
-                        <li><a class="nav-link">@Html.ActionLink("Positions", "Index", 
-                         "Positions")</a></li>
-                         <li><a class="nav-link">@Html.ActionLink("Applications", "Index", "Applications")</a></li>
+                        <li><a class="emptyLink">@Html.ActionLink("Roles Admin", "Index", "RolesAdmin")</a></li>
+                        <li><a class="emptyLink">@Html.ActionLink("Users Admin", "Index", "UsersAdmin")</a></li>
+                        <li><a class="emptyLink">@Html.ActionLink("Positions", "Index", "Positions")</a></li>
+                        <li><a class="emptyLink">@Html.ActionLink("Applications", "Index", "Applications")</a></li>
+                        <li><a class="emptyLink">@Html.ActionLink("Available Positions", "Index", "OpenPositions")</a></li>
                     }
-                    <li><a class="nav-link">@Html.ActionLink("Available Positions", "Index", 
-                         "OpenPositions")</a></li>
-                    <li><a class="nav-link">@Html.Partial("_LoginPartial")</a></li>
+                    @if (Request.IsAuthenticated && User.IsInRole("Manager"))
+                    {
+                        <li><a class="emptyLink" >@Html.ActionLink("Positions", "Index", "Positions")</a></li>
+                        <li><a class="emptyLink" >@Html.ActionLink("Applications", "Index", "Applications")</a></li>
+                        <li><a class="emptyLink">@Html.ActionLink("Available Positions", "Index", "OpenPositions")</a></li>
+                    }
+                    @if (Request.IsAuthenticated && User.IsInRole("Employee"))
+                    {
+                        <li><a class="emptyLink">@Html.ActionLink("Available Positions", "Index", "OpenPositions")</a></li>
+                    }
+                    <li>@Html.Partial("_LoginPartial")</li>
                 </ul>
                 
             </div>
@@ -44,12 +68,12 @@
     <div class="container body-content">
         @RenderBody()
         <!-- Footer -->
-        <footer class="py-5 bg-dark">
+        @*<footer class="py-5 bg-dark">
             <div class="container">
                 <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
-            </div>
+            </div>*@
             <!-- /.container -->
-        </footer>
+        @*</footer>*@
         <!-- Bootstrap core JavaScript -->
         <script src="~/Content/vendor/jquery/jquery.min.js"></script>
         <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

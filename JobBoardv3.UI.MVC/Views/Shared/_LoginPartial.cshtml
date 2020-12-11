@@ -1,10 +1,20 @@
 ﻿@using Microsoft.AspNet.Identity
+
+<style>
+    .emptyLink {
+        display: none !important;
+    }
+
+    .containerTop{
+        margin-top: 3px;
+    }
+</style>
 @if (Request.IsAuthenticated) {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
         @Html.AntiForgeryToken()
 
-        <ul class=" navbar-collapse">
-            <li><a class="nav-link">
+        <ul class="navbar-collapse containerTop">
+            <li><a class="emptyLink">
                 @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
                 </a>
             </li>

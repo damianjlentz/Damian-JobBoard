@@ -50,6 +50,7 @@ namespace IdentitySample.Controllers
 
         //
         // GET: /Users/
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult> Index()
         {
@@ -59,6 +60,7 @@ namespace IdentitySample.Controllers
         //
         // GET: /Users/Details/5
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Details(string id)
         {
             if (id == null)
@@ -75,6 +77,7 @@ namespace IdentitySample.Controllers
         //
         // GET: /Users/Create
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create()
         {
             //Get the list of Roles
@@ -86,6 +89,7 @@ namespace IdentitySample.Controllers
         // POST: /Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create(RegisterViewModel userViewModel, params string[] selectedRoles)
         {
             if (ModelState.IsValid)
@@ -123,6 +127,7 @@ namespace IdentitySample.Controllers
         //
         // GET: /Users/Edit/1
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(string id)
         {
             if (id == null)
@@ -154,6 +159,7 @@ namespace IdentitySample.Controllers
         // POST: /Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit([Bind(Include = "Email,Id")] EditUserViewModel editUser, params string[] selectedRole)
         {
             if (ModelState.IsValid)
@@ -194,6 +200,7 @@ namespace IdentitySample.Controllers
         //
         // GET: /Users/Delete/5
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
@@ -213,6 +220,7 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
             if (ModelState.IsValid)

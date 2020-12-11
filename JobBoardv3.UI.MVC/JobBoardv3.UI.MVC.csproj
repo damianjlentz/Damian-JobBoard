@@ -191,6 +191,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\business-frontpage.css" />
+    <Content Include="Content\css\CoolStyles.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="Content\vendor\bootstrap\css\bootstrap-reboot.css" />
@@ -266,7 +267,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -328,9 +328,12 @@
     <Content Include="Views\Applications\Details.cshtml" />
     <Content Include="Views\Applications\Edit.cshtml" />
     <Content Include="Views\Applications\Index.cshtml" />
+    <Content Include="Views\Applications\CreateApplication.cshtml" />
+    <Content Include="Views\Applications\Confirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadedResumes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

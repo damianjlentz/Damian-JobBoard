@@ -11,19 +11,32 @@ namespace JobBoardv3.DATA.EF
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.Web;
+
     public partial class Application
     {
+        [DisplayName("Application Id")]
         public int ApplicationId { get; set; }
+        [DisplayName("Available Position Id")]
         public int OpenPositionId { get; set; }
+        [DisplayName("User Id")]
         public int UserId { get; set; }
+        [DisplayName("Application Date")]
         public System.DateTime ApplicationDate { get; set; }
+        [DisplayName("Manager Notes")]
         public string ManagerNotes { get; set; }
+        [DisplayName("Status")]
         public int ApplicationStatus { get; set; }
+        [DisplayName("Resume")]
         public string ResumeFileName { get; set; }
+        [DisplayName("First Name")]
+        public string FirstName { get; set; }
+        [DisplayName("Last Name")]
+        public string LastName { get; set; }
     
+        public HttpPostedFileBase ResumeFile { get; set; }
         public virtual ApplicationStatu ApplicationStatu { get; set; }
         public virtual OpenPosition OpenPosition { get; set; }
-        public virtual UserDetail UserDetail { get; set; }
     }
 }

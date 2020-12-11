@@ -11,7 +11,8 @@ namespace JobBoardv3.DATA.EF
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class ApplicationStatu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,9 +20,11 @@ namespace JobBoardv3.DATA.EF
         {
             this.Applications = new HashSet<Application>();
         }
-    
+        [DisplayName("Status Id")]
         public int ApplicationStatusId { get; set; }
+        [DisplayName("Status")]
         public string StatusName { get; set; }
+        [DisplayName("Status Description")]
         public string StatusDescription { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

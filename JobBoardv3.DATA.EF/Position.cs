@@ -11,7 +11,8 @@ namespace JobBoardv3.DATA.EF
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Position
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,9 +20,11 @@ namespace JobBoardv3.DATA.EF
         {
             this.OpenPositions = new HashSet<OpenPosition>();
         }
-    
+
+        [DisplayName("Position Id")]
         public int PositionId { get; set; }
         public string Title { get; set; }
+        [DisplayName("Job Description")]
         public string JobDescription { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
