@@ -155,7 +155,7 @@ namespace JobBoardv3.UI.MVC.Controllers
             ViewBag.ResumeFileName = application.ResumeFileName;
             ViewBag.ApplicationStatus = new SelectList(db.ApplicationStatus, "ApplicationStatusId", "StatusName", application.ApplicationStatus);
             ViewBag.OpenPositionId = new SelectList(db.OpenPositions, "OpenPositionId", "OpenPositionId", application.OpenPositionId);
-            //ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName", application.UserId);
+            ViewBag.UserEmail = User.Identity.GetUserName();
             return View(application);
         }
 

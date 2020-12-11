@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var FullName = Model.FirstName + " " + Model.LastName;
+
 }
 
 <h2 class="topstyle">Details</h2>
@@ -11,6 +13,15 @@
     <h4>Application</h4>
     <hr />
     <dl class="dl-horizontal">
+
+        <dt>
+            Name
+        </dt>
+        
+        <dd>
+            @FullName
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.ApplicationDate)
         </dt>
@@ -43,12 +54,28 @@
             @Html.DisplayFor(model => model.ApplicationStatu.StatusName)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.OpenPosition.OpenPositionId)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.OpenPosition.OpenPositionId)
+        </dd>*@
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OpenPosition.Position.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OpenPosition.Position.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OpenPosition.Position.JobDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OpenPosition.Position.JobDescription)
         </dd>
 
        
