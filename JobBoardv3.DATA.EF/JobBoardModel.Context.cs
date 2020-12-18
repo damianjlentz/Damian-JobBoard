@@ -13,10 +13,10 @@ namespace JobBoardv3.DATA.EF
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class JobBoardEntities : DbContext
+    public partial class JobBoardEntities1 : DbContext
     {
-        public JobBoardEntities()
-            : base("name=JobBoardEntities")
+        public JobBoardEntities1()
+            : base("name=JobBoardEntities1")
         {
         }
     
@@ -25,7 +25,6 @@ namespace JobBoardv3.DATA.EF
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<Application> Applications { get; set; }
         public virtual DbSet<ApplicationStatu> ApplicationStatus { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
@@ -35,5 +34,6 @@ namespace JobBoardv3.DATA.EF
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<OpenPosition> OpenPositions { get; set; }
         public virtual DbSet<Position> Positions { get; set; }
+        public virtual DbSet<UserDetail> UserDetails { get; set; }
     }
 }

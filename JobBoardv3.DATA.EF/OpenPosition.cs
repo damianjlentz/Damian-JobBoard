@@ -20,13 +20,14 @@ namespace JobBoardv3.DATA.EF
         {
             this.Applications = new HashSet<Application>();
         }
+
         [DisplayName("Available Position Id")]
         public int OpenPositionId { get; set; }
         [DisplayName("Position Id")]
         public int PositionId { get; set; }
         [DisplayName("Location Id")]
         public int LocationId { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Application> Applications { get; set; }
         public virtual Location Location { get; set; }

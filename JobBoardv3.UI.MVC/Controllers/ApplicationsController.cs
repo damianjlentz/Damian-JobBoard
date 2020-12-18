@@ -6,9 +6,12 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using IdentitySample.Models;
 using JobBoardv3.DATA.EF;
+using JobBoardv3.UI.MVC.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
@@ -17,126 +20,72 @@ namespace JobBoardv3.UI.MVC.Controllers
     
     public class ApplicationsController : Controller
     {
-        private JobBoardEntities db = new JobBoardEntities();
+        public ApplicationsController()
+        {
+
+        }
+
+        public ApplicationsController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+        private JobBoardEntities1 db = new JobBoardEntities1();
 
         // GET: Applications
         [Authorize(Roles = "Admin, Manager")]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var applications = db.Applications.Include(a => a.ApplicationStatu).Include(a => a.OpenPosition);
-            return View(applications.ToList());
+            ApplicationsViewModel viewModel = new ApplicationsViewModel();
+            var userId = User.Identity.GetUserId();
+            var userRoles = await UserManager.GetRolesAsync(userId);
+            var applications = db.Applications.Include(o => o.ApplicationStatu).Include(o => o.OpenPosition);
+
+            var stringToCheck = "Manager";
+
+            if (userRoles.Any(stringToCheck.Contains))
+            {
+                viewModel.Applications = applications.ToList().Where(o => o.OpenPosition.Location.ManagerId == userId).ToList();
+                return View(viewModel.Applications);
+            }
+            else
+            {
+                viewModel.Applications = applications.ToList();
+                return View(applications.ToList());
+            }
         }
 
         // GET: Applications/Details/5
         [Authorize(Roles = "Admin, Manager")]
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Application application = db.Applications.Find(id);
+            var user = await UserManager.FindByIdAsync(application.UserId);
             if (application == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.UserEmail = user.Email;
             return View(application);
         }
 
-        //// GET: Applications/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.ApplicationStatus = new SelectList(db.ApplicationStatus, "ApplicationStatusId", "StatusName");
-        //    ViewBag.OpenPosition = new SelectList(db.OpenPositions, "OpenPosition", "OpenPosition");
-        //    //ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName");
-        //    return View();
-        //}
-
-        //// POST: Applications/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "ApplicationId,OpenPositionId,UserId,ApplicationDate,ManagerNotes,ApplicationStatus,ResumeFileName,FirstName,LastName")] Application application)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Applications.Add(application);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.ApplicationStatus = new SelectList(db.ApplicationStatus, "ApplicationStatusId", "StatusName", application.ApplicationStatus);
-        //    ViewBag.OpenPositionId = new SelectList(db.OpenPositions, "OpenPositionId", "OpenPositionId", application.OpenPositionId);
-        //    //ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName", application.UserId);
-        //    return View(application);
-        //}
-
-        // GET: Applications/CreateApplication
-        [Authorize(Roles = "Admin, Manager, Employee")]
-        public ActionResult CreateApplication(int id)
-        {
-            Application application = new Application();
-            application.OpenPositionId = id;
-            Position position = db.Positions.Find(id);
-            ViewBag.JobTitle = position.Title;
-            ViewBag.UserEmail = User.Identity.GetUserName();
-            return View(application);
-        }
-
-        // POST: Applications/CreateApplication
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin, Manager, Employee")]
-        public ActionResult CreateApplication([Bind(Include = "ApplicationId,OpenPositionId,UserId,ApplicationDate,ManagerNotes,ApplicationStatus,FirstName,LastName, ResumeFile")] Application application)
-        {
-            if (ModelState.IsValid)
-            {
-                //Get Upload path from Web.Config file AppSettings.  
-                string UploadPath = ConfigurationManager.AppSettings["UserResumePath"].ToString();
-
-                //Its Create complete path to store in server.  
-                application.ResumeFileName = UploadPath + application.ResumeFile.FileName;
-
-                //To copy and save file into server.  
-                application.ResumeFile.SaveAs(Server.MapPath(Path.Combine(UploadPath, application.ResumeFile.FileName)));
-
-                var date =  DateTime.Now;
-                application.ApplicationDate = date;
-                application.ApplicationStatus = 1;
-                db.Applications.Add(application);
-                db.SaveChanges();
-                return View("Confirmation");
-            }
-
-            ViewBag.ApplicationStatus = new SelectList(db.ApplicationStatus, "ApplicationStatusId", "StatusName", application.ApplicationStatus);
-            ViewBag.OpenPositionId = new SelectList(db.OpenPositions, "OpenPositionId", "OpenPositionId", application.OpenPositionId);
-            //ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName", application.UserId);
-            return View(application);
-        }
-
-        //[HttpPost]
-        //public ActionResult UploadResume(HttpPostedFileBase file)
-        //{
-        //    try
-        //    {
-        //        if (file.ContentLength > 0)
-        //        {
-        //            string _FileName = Path.GetFileName(file.FileName);
-        //            string _path = Path.Combine(Server.MapPath("~/UploadedResumes"), _FileName);
-        //            file.SaveAs(_path);
-        //        }
-        //        ViewBag.Message = "File Uploaded Successfully!!";
-        //        return View();
-        //    }
-        //    catch
-        //    {
-        //        ViewBag.Message = "File upload failed!!";
-        //        return View();
-        //    }
-        //}
+        
 
         // GET: Applications/Edit/5
         [Authorize(Roles = "Admin")]
@@ -152,7 +101,7 @@ namespace JobBoardv3.UI.MVC.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ResumeFileName = application.ResumeFileName;
+            //ViewBag.ResumeFileName = application.ResumeFileName;
             ViewBag.ApplicationStatus = new SelectList(db.ApplicationStatus, "ApplicationStatusId", "StatusName", application.ApplicationStatus);
             ViewBag.OpenPositionId = new SelectList(db.OpenPositions, "OpenPositionId", "OpenPositionId", application.OpenPositionId);
             ViewBag.UserEmail = User.Identity.GetUserName();

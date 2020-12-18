@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -20,6 +21,11 @@ namespace IdentitySample.Models
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
+
+        [DisplayName("Location")]
+        public int LocationId { get; set; }
+
+        public IEnumerable<SelectListItem> LocationList { get; set; }
 
         public IEnumerable<SelectListItem> RolesList { get; set; }
     }

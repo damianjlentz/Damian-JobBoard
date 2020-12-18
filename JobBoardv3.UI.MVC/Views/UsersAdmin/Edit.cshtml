@@ -6,8 +6,12 @@
 
 <h2 class="topstyle">Edit.</h2>
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
-@using (Html.BeginForm()) {
+
+
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
@@ -19,8 +23,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-               @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-               @Html.ValidationMessageFor(model => model.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email)
             </div>
         </div>
         <div class="form-group">
@@ -28,16 +32,29 @@
             <span class=" col-md-10">
                 @foreach (var item in Model.RolesList)
                 {
-                    <input type="checkbox" name="SelectedRole" value="@item.Value" checked="@item.Selected" class="checkbox-inline" />
+                    <input type="checkbox" id="@item.Value" name="SelectedRole" value="@item.Value" checked="@item.Selected" class="checkbox-inline" />
                     @Html.Label(item.Value, new { @class = "control-label" })
                 }
             </span>
         </div>
+        <div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+
+
+            <div id="LocationSelect"class="form-group">
+                @Html.Label("Store Number", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.LocationId, Model.LocationList)
+                    @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "text-danger" })
+                </div>
             </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+
         </div>
     </div>
 }
@@ -45,6 +62,27 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        valueChanged()
+        console.log("ready!");
+    });
+
+    $("#Manager").on('click', function () {
+        valueChanged();
+    });
+
+    function valueChanged() {
+        console.log("valueChanged!");
+
+        if ($('#Manager').is(":checked"))
+            $("#LocationSelect").show();
+        else
+            $("#LocationSelect").hide();
+    }
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -1,7 +1,11 @@
 ﻿using IdentitySample.Models;
+using JobBoardv3.DATA.EF;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -12,6 +16,9 @@ namespace IdentitySample.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+
+        private JobBoardEntities1 db = new JobBoardEntities1();
+
         public AccountController()
         {
         }
@@ -151,9 +158,28 @@ namespace IdentitySample.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
-                UserManager.AddToRole(user.Id, "Employee");
+                //UserManager.AddToRole(user.Id, "Employee");
                 if (result.Succeeded)
                 {
+                    UserDetail userDetail = new UserDetail();
+                    userDetail.UserId = user.Id;
+                    userDetail.FirstName = model.FirstName;
+                    userDetail.LastName = model.LastName;
+                    
+                    //Get Upload path from Web.Config file AppSettings.  
+                    string UploadPath = ConfigurationManager.AppSettings["UserResumePath"].ToString();
+
+                    //Its Create complete path to store in server.  
+                    userDetail.ResumeFilename = UploadPath + model.ResumeFile.FileName;
+
+                    //To copy and save file into server.  
+                    model.ResumeFile.SaveAs(Server.MapPath(Path.Combine(UploadPath, model.ResumeFile.FileName)));
+
+                    db.UserDetails.Add(userDetail);
+                    db.SaveChanges();
+
+
+
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");

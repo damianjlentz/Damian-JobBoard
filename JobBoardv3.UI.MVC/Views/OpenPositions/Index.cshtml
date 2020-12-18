@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <h2 class="topstyle">Available Positions</h2>
@@ -37,12 +38,17 @@
 
         @if (Request.IsAuthenticated && User.IsInRole("Admin"))
         {
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.OpenPositionId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.OpenPositionId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.OpenPositionId }) |
-                @Html.ActionLink("Apply", "CreateApplication", "Applications", new { id = item.OpenPositionId }, null)
-            </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.OpenPositionId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.OpenPositionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.OpenPositionId }) |
+            @using (Html.BeginForm("CreateApplication", "OpenPositions", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("positionId", item.OpenPositionId)
+                <input type="submit" value="Apply" />
+            }
+        </td>
         }
 
         @if (Request.IsAuthenticated && User.IsInRole("Manager"))
@@ -56,9 +62,15 @@
         @if (Request.IsAuthenticated && User.IsInRole("Employee"))
         {
             <td>
-                @Html.ActionLink("Apply", "CreateApplication", "Applications", new { id = item.OpenPositionId }, null)
+                @using (Html.BeginForm("CreateApplication", "OpenPositions", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("positionId", item.OpenPositionId)
+                    <input type="submit" value="Apply" />
+                }
             </td>
-        }
+                }
+            
     </tr>
     }
 

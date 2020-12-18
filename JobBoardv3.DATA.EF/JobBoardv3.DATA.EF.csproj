@@ -52,113 +52,78 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
+      <DependentUpon>JobBoardModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ApplicationStatu.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
+      <DependentUpon>JobBoardModel.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetRole.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
+      <DependentUpon>JobBoardModel.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUser.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
+      <DependentUpon>JobBoardModel.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUserClaim.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
+      <DependentUpon>JobBoardModel.tt</DependentUpon>
     </Compile>
     <Compile Include="AspNetUserLogin.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
+      <DependentUpon>JobBoardModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="C__MigrationHistory.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccessModel.Context.cs">
+    <Compile Include="JobBoardModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataAccessModel.Context.tt</DependentUpon>
+      <DependentUpon>JobBoardModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAccessModel.cs">
+    <Compile Include="JobBoardModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
+      <DependentUpon>JobBoardModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAccessModel.Designer.cs">
+    <Compile Include="JobBoardModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataAccessModel.edmx</DependentUpon>
+      <DependentUpon>JobBoardModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Location.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
+      <DependentUpon>JobBoardModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Metadata\JobBoardMetadata.cs" />
-    <Compile Include="Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Compile>
     <Compile Include="OpenPosition.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
+      <DependentUpon>JobBoardModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Position.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
+      <DependentUpon>JobBoardModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <Compile Include="UserDetail.cs">
+      <DependentUpon>JobBoardModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="DataAccessModel.edmx">
+    <EntityDeploy Include="JobBoardModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DataAccessModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>JobBoardModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DataAccessModel.edmx.diagram">
-      <DependentUpon>DataAccessModel.edmx</DependentUpon>
-    </None>
-    <None Include="Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <None Include="JobBoardModel.edmx.diagram">
+      <DependentUpon>JobBoardModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataAccessModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataAccessModel.edmx</DependentUpon>
-      <LastGenOutput>DataAccessModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DataAccessModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataAccessModel.edmx</DependentUpon>
-      <LastGenOutput>DataAccessModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
-    <Content Include="Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="JobBoardModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>JobBoardModel.edmx</DependentUpon>
+      <LastGenOutput>JobBoardModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="JobBoardModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>JobBoardModel.edmx</DependentUpon>
+      <LastGenOutput>JobBoardModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

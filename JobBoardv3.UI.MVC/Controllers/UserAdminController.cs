@@ -1,4 +1,5 @@
 ﻿using IdentitySample.Models;
+using JobBoardv3.DATA.EF;
 using Microsoft.AspNet.Identity.Owin;
 using System.Data.Entity;
 using System.Linq;
@@ -12,6 +13,10 @@ namespace IdentitySample.Controllers
     [Authorize(Roles = "Admin")]
     public class UsersAdminController : Controller
     {
+
+        private JobBoardEntities1 db = new JobBoardEntities1();
+
+
         public UsersAdminController()
         {
         }
@@ -151,7 +156,9 @@ namespace IdentitySample.Controllers
                     Selected = userRoles.Contains(x.Name),
                     Text = x.Name,
                     Value = x.Name
-                })
+                }),
+                LocationList = new SelectList(db.Locations, "LocationId", "StoreNumber"),
+                LocationId = db.Locations.FirstOrDefault(l => l.ManagerId == user.Id)?.LocationId  ?? 0
             });
         }
 
@@ -160,7 +167,7 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Edit([Bind(Include = "Email,Id")] EditUserViewModel editUser, params string[] selectedRole)
+        public async Task<ActionResult> Edit([Bind(Include = "Email,Id,LocationId")] EditUserViewModel editUser, string[] selectedRole, string selectedLocation)
         {
             if (ModelState.IsValid)
             {
@@ -176,8 +183,9 @@ namespace IdentitySample.Controllers
                 var userRoles = await UserManager.GetRolesAsync(user.Id);
 
                 selectedRole = selectedRole ?? new string[] { };
-
+                
                 var result = await UserManager.AddToRolesAsync(user.Id, selectedRole.Except(userRoles).ToArray<string>());
+
 
                 if (!result.Succeeded)
                 {
@@ -185,12 +193,42 @@ namespace IdentitySample.Controllers
                     return View();
                 }
                 result = await UserManager.RemoveFromRolesAsync(user.Id, userRoles.Except(selectedRole).ToArray<string>());
-
+                
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Errors.First());
                     return View();
                 }
+
+                var stringToCheck = "Manager";
+
+                if (selectedRole.Any(stringToCheck.Contains))
+                {
+
+                    var managerLocationsCheck = from a in db.Locations
+                                                where a.ManagerId == user.Id || a.LocationId == editUser.LocationId
+                                                select a;
+
+                    foreach (var location in managerLocationsCheck.ToList())
+                    {
+
+                        //location.ManagerId = location.LocationId == editUser.LocationId ? user.Id : null;
+
+                        if (editUser.LocationId == location.LocationId)
+                        {
+                            location.ManagerId = editUser.Id;
+                        }
+                        else
+                        {
+                            location.ManagerId = null;
+                        }
+                    }
+
+                    db.SaveChanges();
+                    //var location = db.Locations.Find(editUser.LocationId);
+                    //location.ManagerId = user.Id;
+                }
+                
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", "Something failed.");

@@ -12,7 +12,7 @@ namespace JobBoardv3.UI.MVC.Controllers
 {
     public class PositionsController : Controller
     {
-        private JobBoardEntities db = new JobBoardEntities();
+        private JobBoardEntities1 db = new JobBoardEntities1();
 
         // GET: Positions
         [Authorize(Roles = "Admin,Manager")]

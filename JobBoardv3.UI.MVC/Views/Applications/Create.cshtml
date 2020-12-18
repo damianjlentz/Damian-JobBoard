@@ -57,10 +57,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ResumeFileName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UserDetail.ResumeFilename, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ResumeFileName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ResumeFileName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.UserDetail.ResumeFilename, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserDetail.ResumeFilename, "", new { @class = "text-danger" })
             </div>
         </div>
 

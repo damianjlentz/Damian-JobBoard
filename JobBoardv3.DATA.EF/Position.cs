@@ -26,7 +26,7 @@ namespace JobBoardv3.DATA.EF
         public string Title { get; set; }
         [DisplayName("Job Description")]
         public string JobDescription { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OpenPosition> OpenPositions { get; set; }
     }

@@ -13,22 +13,28 @@ namespace JobBoardv3.DATA.EF
     using System.Collections.Generic;
     using System.ComponentModel;
 
-    public partial class ApplicationStatu
+    public partial class UserDetail
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ApplicationStatu()
+        public UserDetail()
         {
             this.Applications = new HashSet<Application>();
+            this.Locations = new HashSet<Location>();
         }
 
-        [DisplayName("Status Id")]
-        public int ApplicationStatusId { get; set; }
-        [DisplayName("Status Name")]
-        public string StatusName { get; set; }
-        [DisplayName("Status Description")]
-        public string StatusDescription { get; set; }
+        [DisplayName("User Id")]
+        public string UserId { get; set; }
+        [DisplayName("First Name")]
+        public string FirstName { get; set; }
+        [DisplayName("Last Name")]
+        public string LastName { get; set; }
+        [DisplayName("Resume Filename")]
+        public string ResumeFilename { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Application> Applications { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Location> Locations { get; set; }
     }
 }

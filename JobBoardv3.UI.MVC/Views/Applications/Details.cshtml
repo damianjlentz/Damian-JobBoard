@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var FullName = Model.FirstName + " " + Model.LastName;
+    var FullName = Model.UserDetail.FirstName + " " + Model.UserDetail.LastName;
 
 }
 
@@ -17,7 +17,7 @@
         <dt>
             Name
         </dt>
-        
+
         <dd>
             @FullName
         </dd>
@@ -39,11 +39,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ResumeFileName)
+            @Html.DisplayNameFor(model => model.UserDetail.ResumeFilename)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ResumeFileName)
+            @Html.DisplayFor(model => model.UserDetail.ResumeFilename)
         </dd>
 
         <dt>
@@ -61,7 +61,12 @@
         <dd>
             @Html.DisplayFor(model => model.OpenPosition.OpenPositionId)
         </dd>*@
-
+        <dt>
+            @Html.DisplayNameFor(model => model.OpenPosition.Location.StoreNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OpenPosition.Location.StoreNumber)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.OpenPosition.Position.Title)
         </dt>
@@ -78,7 +83,15 @@
             @Html.DisplayFor(model => model.OpenPosition.Position.JobDescription)
         </dd>
 
-       
+        <dt>
+                Email
+        </dt>
+
+        <dd>
+             <a href="mailto:@ViewBag.UserEmail">@ViewBag.UserEmail</a>
+        </dd>
+
+
 
     </dl>
 </div>
