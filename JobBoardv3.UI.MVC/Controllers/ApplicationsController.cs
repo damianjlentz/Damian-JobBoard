@@ -45,37 +45,51 @@ namespace JobBoardv3.UI.MVC.Controllers
         private JobBoardEntities1 db = new JobBoardEntities1();
 
         // GET: Applications
-        [Authorize(Roles = "Admin, Manager")]
+        [Authorize(Roles = "Admin, Manager, Employee")]
         public async Task<ActionResult> Index()
         {
+            //create viewmodel to fill with data to pass to the view
             ApplicationsViewModel viewModel = new ApplicationsViewModel();
             var userId = User.Identity.GetUserId();
             var userRoles = await UserManager.GetRolesAsync(userId);
             var applications = db.Applications.Include(o => o.ApplicationStatu).Include(o => o.OpenPosition);
 
             var stringToCheck = "Manager";
+            var stringToCheck2 = "Employee";
 
+            
             if (userRoles.Any(stringToCheck.Contains))
             {
                 viewModel.Applications = applications.ToList().Where(o => o.OpenPosition.Location.ManagerId == userId).ToList();
                 return View(viewModel.Applications);
             }
-            else
+            else if (userRoles.Any(stringToCheck2.Contains)) 
+            {
+                viewModel.Applications = applications.ToList().Where(o => o.UserId == userId).ToList();
+                return View(viewModel.Applications);
+            }
+            else //if admin
             {
                 viewModel.Applications = applications.ToList();
                 return View(applications.ToList());
             }
+
+
         }
 
         // GET: Applications/Details/5
-        [Authorize(Roles = "Admin, Manager")]
+        [Authorize(Roles = "Admin, Manager, Employee")]
         public async Task<ActionResult> Details(int? id)
         {
+            //if you do not have the applications id, return bad request
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Application application = db.Applications.Find(id);
+
+            //get the user by using the application's userId
             var user = await UserManager.FindByIdAsync(application.UserId);
             if (application == null)
             {
@@ -88,7 +102,7 @@ namespace JobBoardv3.UI.MVC.Controllers
         
 
         // GET: Applications/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Edit(int? id)
         {
 
@@ -101,7 +115,7 @@ namespace JobBoardv3.UI.MVC.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.ResumeFileName = application.ResumeFileName;
+            //get a list of ApplicationStatuses, OpenPositionIds, and pass to the view
             ViewBag.ApplicationStatus = new SelectList(db.ApplicationStatus, "ApplicationStatusId", "StatusName", application.ApplicationStatus);
             ViewBag.OpenPositionId = new SelectList(db.OpenPositions, "OpenPositionId", "OpenPositionId", application.OpenPositionId);
             ViewBag.UserEmail = User.Identity.GetUserName();
@@ -113,23 +127,23 @@ namespace JobBoardv3.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Edit([Bind(Include = "ApplicationId,OpenPositionId,UserId,ApplicationDate,ManagerNotes,ApplicationStatus,ResumeFileName")] Application application)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(application).State = EntityState.Modified;
                 db.SaveChanges();
+                //after saving the edit returns user Application Index
                 return RedirectToAction("Index");
             }
             ViewBag.ApplicationStatus = new SelectList(db.ApplicationStatus, "ApplicationStatusId", "StatusName", application.ApplicationStatus);
             ViewBag.OpenPositionId = new SelectList(db.OpenPositions, "OpenPositionId", "OpenPositionId", application.OpenPositionId);
-            //ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName", application.UserId);
             return View(application);
         }
 
         // GET: Applications/Delete/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -147,7 +161,7 @@ namespace JobBoardv3.UI.MVC.Controllers
         // POST: Applications/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult DeleteConfirmed(int id)
         {
             Application application = db.Applications.Find(id);
@@ -155,12 +169,6 @@ namespace JobBoardv3.UI.MVC.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        ////Get: Applications/Confirmation
-        //public ActionResult Confirmation
-        //{
-        //    return View();
-        //}
 
         protected override void Dispose(bool disposing)
         {

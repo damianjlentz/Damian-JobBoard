@@ -5,8 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="topstyle">Applications</h2>
-
+<div class="pageTitleContainer">
+    <div class="pageTitle">Applications</div>
+</div>
 
 
 <table class="table">
@@ -63,6 +64,14 @@
             </td>
         }
         @if (Request.IsAuthenticated && User.IsInRole("Manager"))
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ApplicationId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ApplicationId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ApplicationId })
+            </td>
+        }
+        @if (Request.IsAuthenticated && User.IsInRole("Employee"))
         {
             <td>
                 @Html.ActionLink("Details", "Details", new { id = item.ApplicationId })

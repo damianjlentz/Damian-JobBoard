@@ -5,9 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="topstyle">Details</h2>
-
-<div>
+<div class="pageTitleContainer">
+    <div class="pageTitle">@Html.DisplayFor(model => model.Position.Title)</div>
+</div>
+<div class="editUserContainer">
     <h4>OpenPosition</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -19,17 +20,13 @@
             @Html.DisplayFor(model => model.Location.StoreNumber)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Position.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Position.Title)
-        </dd>
-
     </dl>
+    <div class="editUserSaveContainer">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.OpenPositionId }, new { @class = "actionButton" })
+    </div>
+    <div class="backButtonContainer">
+        @Html.ActionLink("Back to List", "Index", new { }, new { @class = "actionButton" })
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.OpenPositionId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+

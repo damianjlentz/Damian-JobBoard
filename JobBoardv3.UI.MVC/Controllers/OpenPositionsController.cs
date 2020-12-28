@@ -46,48 +46,29 @@ namespace JobBoardv3.UI.MVC.Controllers
         // GET: OpenPositions
         public async Task<ActionResult> Index()
         {
+            //create viewmodel to fill with data to pass to the view
             AvailablePosistionsViewModel viewModel = new AvailablePosistionsViewModel();
             var userId = User.Identity.GetUserId();
             var userRoles = await UserManager.GetRolesAsync(userId);
             var openPositions = db.OpenPositions.Include(o => o.Location).Include(o => o.Position);
 
+
             var stringToCheck = "Manager";
 
             if (userRoles.Any(stringToCheck.Contains))
             {
+                //due to the fact that openPositions is an IEnumerable we change it to a list to query on to get our results
                 viewModel.Positions = openPositions.ToList().Where(o => o.Location.ManagerId == userId).ToList();
-                return View(viewModel.Positions/*, openPositionsAppliedFor.ToList()*/);
+                return View(viewModel.Positions);
             }
             else
             {
                 viewModel.Positions = openPositions.ToList();
-                return View(openPositions.ToList()/*, openPositionsAppliedFor.ToList()*/);
+                return View(openPositions.ToList());
             }
-
-            //var openPositionsAppliedFor = from a in db.Applications
-            //                   where a.UserId == userId
-            //                  select a.OpenPositionId;
-            //viewModel.ApplicationIds = openPositionsAppliedFor.ToList();
-
-            //return View(openPositions.ToList()/*, openPositionsAppliedFor.ToList()*/);
         }
 
-        //GET: Applications/CreateApplication
-        //[Authorize(Roles = "Admin, Manager, Employee")]
-        //public ActionResult CreateApplication(int id)
-        //{
-        //    Application application = new Application();
-        //    OpenPosition openPosition = db.OpenPositions.Where(b => b.PositionId == id).FirstOrDefault();
-        //    application.OpenPositionId = openPosition.OpenPositionId;
-        //    Position position = db.Positions.Find(id);
-        //    ViewBag.JobTitle = position.Title;
-        //    ViewBag.UserEmail = User.Identity.GetUserName();
-        //    return View(application);
-        //}
-
         // POST: Applications/CreateApplication
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Manager, Employee")]
@@ -96,19 +77,16 @@ namespace JobBoardv3.UI.MVC.Controllers
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
+                //makes application variable to fill in with data to pass to the applications table
                 var application = new Application() {
                     ApplicationDate = DateTime.Now,
                     OpenPositionId = positionId,
                     UserId = userId,
-                    ApplicationStatus = 5
+                    ApplicationStatus = 5 //pending status
                 };
                 db.Applications.Add(application);
                 db.SaveChanges();
             }
-
-            //ViewBag.ApplicationStatus = new SelectList(db.ApplicationStatus, "ApplicationStatusId", "StatusName", application.ApplicationStatus);
-            //ViewBag.OpenPositionId = new SelectList(db.OpenPositions, "OpenPositionId", "OpenPositionId", application.OpenPositionId);
-            //ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName", application.UserId);
             return RedirectToAction("Index");
         }
 
@@ -137,11 +115,9 @@ namespace JobBoardv3.UI.MVC.Controllers
         }
 
         // POST: OpenPositions/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Manageer")]
+        [Authorize(Roles = "Admin,Manager")]
         public ActionResult Create([Bind(Include = "OpenPositionId,PositionId,LocationId")] OpenPosition openPosition)
         {
             if (ModelState.IsValid)
@@ -175,8 +151,6 @@ namespace JobBoardv3.UI.MVC.Controllers
         }
 
         // POST: OpenPositions/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Manager")]
@@ -220,29 +194,6 @@ namespace JobBoardv3.UI.MVC.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        ////apply functionality Get
-        //ViewBag.ApplicationStatus = new SelectList(db.ApplicationStatus, "ApplicationStatusId", "StatusName");
-        //ViewBag.OpenPositionId = new SelectList(db.OpenPositions, "OpenPositionId", "OpenPositionId");
-        //ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName");
-        //    return View();
-
-        ////apply functionality Post
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Apply([Bind(Include = "OpenPositionId,PositionId,LocationId")] OpenPosition openPosition)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.OpenPositions.Add(openPosition);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.LocationId = new SelectList(db.Locations, "LocationId", "StoreNumber", openPosition.LocationId);
-        //    ViewBag.PositionId = new SelectList(db.Positions, "PositionId", "Title", openPosition.PositionId);
-        //    return View(openPosition);
-        //}
 
         protected override void Dispose(bool disposing)
         {

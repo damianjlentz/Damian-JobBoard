@@ -29,6 +29,7 @@ namespace JobBoardv3.UI.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //create var of type position and assign position from the database with the id 
             Position position = db.Positions.Find(id);
             if (position == null)
             {

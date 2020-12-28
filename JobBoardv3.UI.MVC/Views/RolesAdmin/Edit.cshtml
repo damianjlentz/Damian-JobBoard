@@ -4,38 +4,39 @@
     ViewBag.Title = "Edit";
 }
 
-<h2 class="topstyle">Edit.</h2>
-
+<div class="pageTitleContainer">
+    <div class="pageTitle">Edit Role</div>
+</div>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>Roles.</h4>
-        <hr />
+<div class="editContainer">
+    <div class="editInner">
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+        <div class="flexSpaceBetween">
+            <div class="roleName flexSm">Role Name</div>
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Name)
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
         </div>
     </div>
+
+    <div  class="editUserSaveContainer">
+        <input type="submit" value="Save" class="applyButton" />
+    </div>
+    <div class="backButtonContainer">
+        @Html.ActionLink("Back to List", "Index", new { }, new { @class = "actionButton" })
+    </div>
+</div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

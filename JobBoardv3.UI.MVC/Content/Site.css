@@ -40,3 +40,198 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+
+/*Custom CSS*/
+
+
+
+.topstyle {
+    margin-top: 10vh;
+}
+
+.topstyle2 {
+    margin-top: 10vh;
+    /*color: #fff;
+            background-color: #337ab7;*/
+    /*padding-left:15px;*/
+    padding-right: 15px;
+}
+
+.form-container {
+    width: 280px;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.emptyLink {
+    display: none !important;
+}
+
+
+/*View CSS*/
+.pageTitleContainer {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.pageTitle {
+    font-size: 50px;
+    font-family: cursive;
+    margin-right: 20px;
+}
+
+.actionButton {
+    width: 100px;
+    height: 22px;
+    margin: 5px 0;
+    display: block;
+    text-align: center;
+    background: gray;
+    border-radius: 5px;
+    color: white;
+    box-shadow: 5px 5px 5px #aaaaaa;
+}
+
+    .actionButton:hover {
+        text-decoration: none;
+        color: white;
+    }
+
+.cardContainer {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    width: 65vw;
+    margin: auto;
+    justify-content: center;
+    background: white;
+    min-height: 155px;
+}
+
+.card {
+    margin: 10px;
+    background: gainsboro;
+    width: 200px;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #aaaaaa;
+}
+
+.cardActions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-end;
+}
+
+.createContainer {
+    position: absolute;
+    right: -52px;
+    top: -20px;
+}
+
+.applyButton {
+    border: none;
+    width: 100px;
+    height: 22px;
+    margin: 5px 0;
+    display: block;
+    text-align: center;
+    background: darkorange;
+    border-radius: 5px;
+    color: white;
+    box-shadow: 5px 5px 5px #aaaaaa;
+}
+
+.applyButton:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.editContainer {
+    background: white;
+    display: flex;
+    justify-content: center;
+    max-width: 60vw;
+    margin: auto;
+    padding: 25px;
+    height: 100px;
+    position: relative;
+}
+
+.editInner{
+    width: 90%;
+}
+
+.flexSpaceBetween{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.flexSm{
+    flex: 1 1 25%;
+}
+
+.roleName {
+    margin: auto;
+    font-weight: 600;
+}
+
+.sectionName {
+    font-weight: 600;
+}
+
+.sectionNameWidth {
+    width: 150px;
+}
+
+.sectionMargin{
+    margin: 10px 0;
+}
+
+.sectionMarginLast {
+    margin: 10px 0 20px 0;
+}
+
+.backButtonContainer {
+    position: absolute;
+    left: 15px;
+    bottom: 5px;
+}
+
+.editUserContainer {
+    background: white;
+    width: 480px;
+    margin: auto;
+    padding: 25px;
+    position: relative;
+}
+
+.editUserSaveContainer {
+    position: absolute;
+    right: 15px;
+    bottom: 5px;
+}
+
+.deleteButton {
+    border: none;
+    width: 100px;
+    height: 22px;
+    margin: 5px 0;
+    display: block;
+    text-align: center;
+    background: red;
+    border-radius: 5px;
+    color: white;
+    box-shadow: 5px 5px 5px #aaaaaa;
+}
+
+    .deleteButton:hover {
+        text-decoration: none;
+        color: white;
+    }

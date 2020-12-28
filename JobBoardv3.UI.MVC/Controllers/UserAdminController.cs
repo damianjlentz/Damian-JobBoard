@@ -100,6 +100,7 @@ namespace IdentitySample.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = userViewModel.Email, Email = userViewModel.Email };
+                //create var with the result of creating a new user
                 var adminresult = await UserManager.CreateAsync(user, userViewModel.Password);
 
                 //Add User to the selected Roles 
@@ -139,6 +140,7 @@ namespace IdentitySample.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //use Id to get user and store in user variable
             var user = await UserManager.FindByIdAsync(id);
             if (user == null)
             {
@@ -147,10 +149,12 @@ namespace IdentitySample.Controllers
 
             var userRoles = await UserManager.GetRolesAsync(user.Id);
 
+            //returning an edituserviewmodel to the view with data in it
             return View(new EditUserViewModel()
             {
                 Id = user.Id,
-                Email = user.Email,
+                Email = user.Email, 
+                //create dropdown list ready list of roles
                 RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
                 {
                     Selected = userRoles.Contains(x.Name),
@@ -158,6 +162,7 @@ namespace IdentitySample.Controllers
                     Value = x.Name
                 }),
                 LocationList = new SelectList(db.Locations, "LocationId", "StoreNumber"),
+                //get locationId where location's managerId = userId or 0            ?.LocationId checks if there is a value and if there is not it stops
                 LocationId = db.Locations.FirstOrDefault(l => l.ManagerId == user.Id)?.LocationId  ?? 0
             });
         }
@@ -209,10 +214,11 @@ namespace IdentitySample.Controllers
                                                 where a.ManagerId == user.Id || a.LocationId == editUser.LocationId
                                                 select a;
 
+                    //loop through each location in list and check for if user is manager of location
                     foreach (var location in managerLocationsCheck.ToList())
                     {
 
-                        //location.ManagerId = location.LocationId == editUser.LocationId ? user.Id : null;
+                        
 
                         if (editUser.LocationId == location.LocationId)
                         {
@@ -225,8 +231,6 @@ namespace IdentitySample.Controllers
                     }
 
                     db.SaveChanges();
-                    //var location = db.Locations.Find(editUser.LocationId);
-                    //location.ManagerId = user.Id;
                 }
                 
                 return RedirectToAction("Index");

@@ -5,51 +5,41 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="topstyle">Positions</h2>
+<div class="pageTitleContainer">
+    <div class="pageTitle">Positions</div>
+</div>
 
-@if (Request.IsAuthenticated && User.IsInRole("Admin"))
-{
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-}
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.JobDescription)
-        </th>
-        <th></th>
-    </tr>
-
+<div class="cardContainer">
+    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <div class="createContainer">
+            @Html.ActionLink("+", "Create", new { }, new { @class = "actionButton" })
+        </div>
+    }
+        
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.JobDescription)
-        </td>
+        <div class="card">
+            <div class="roleName">
+                <b>@Html.DisplayFor(modelItem => item.Title)</b>
+            </div>
+            <div class="roleName">
+                @Html.DisplayFor(modelItem => item.JobDescription)
+            </div>
+            <div class="cardActions">
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.PositionId }, new { @class = "actionButton" })
+                    @Html.ActionLink("Details", "Details", new { id = item.PositionId }, new { @class = "actionButton" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.PositionId }, new { @class = "actionButton" })
+                }
 
-        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
-        {
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.PositionId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.PositionId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.PositionId })
-            </td>
-        }
+                @if (Request.IsAuthenticated && User.IsInRole("Manager"))
+                {
+                    @Html.ActionLink("Details", "Details", new { id = item.PositionId }, new { @class = "actionButton" })
+                }
 
-        @if (Request.IsAuthenticated && User.IsInRole("Manager"))
-        {
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.PositionId })
-            </td>
-        }
-    </tr>
+            </div>
+        </div>
     }
-
-</table>
+</div>

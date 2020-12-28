@@ -5,19 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="topstyle">Details</h2>
+<div class="pageTitleContainer">
+    <div class="pageTitle">@Html.DisplayFor(model => model.Title)</div>
+</div>
 
-<div>
-    <h4>Position</h4>
-    <hr />
+<div  class="editUserContainer">
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.JobDescription)
@@ -28,8 +21,12 @@
         </dd>
 
     </dl>
+
+
+    <div class="editUserSaveContainer">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.PositionId }, new { @class = "actionButton" })
+    </div>
+    <div class="backButtonContainer">
+        @Html.ActionLink("Back to List", "Index", new { }, new { @class = "actionButton" })
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PositionId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

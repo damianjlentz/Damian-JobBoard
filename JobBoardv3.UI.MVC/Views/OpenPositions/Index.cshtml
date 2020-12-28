@@ -6,15 +6,15 @@
 
 }
 
-<h2 class="topstyle">Available Positions</h2>
+@*<h2 class="topstyle">Available Positions</h2>
 
 @if (Request.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Manager")))
 {
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
 }
-    
+
 <table class="table">
     <tr>
         <th>
@@ -28,50 +28,121 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location.StoreNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Position.Title)
-        </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location.StoreNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Position.Title)
+            </td>
 
-        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
-        {
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.OpenPositionId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.OpenPositionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.OpenPositionId }) |
-            @using (Html.BeginForm("CreateApplication", "OpenPositions", FormMethod.Post))
+            @if (Request.IsAuthenticated && User.IsInRole("Admin"))
             {
-                @Html.AntiForgeryToken()
-                @Html.Hidden("positionId", item.OpenPositionId)
-                <input type="submit" value="Apply" />
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.OpenPositionId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.OpenPositionId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.OpenPositionId }) |
+                    @using (Html.BeginForm("CreateApplication", "OpenPositions", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("positionId", item.OpenPositionId)
+                        <input type="submit" value="Apply" />
+                    }
+                </td>
             }
-        </td>
-        }
 
-        @if (Request.IsAuthenticated && User.IsInRole("Manager"))
-        {
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.OpenPositionId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.OpenPositionId })
-            </td>
-        }
+            @if (Request.IsAuthenticated && User.IsInRole("Manager"))
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.OpenPositionId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.OpenPositionId })
+                </td>
+            }
 
-        @if (Request.IsAuthenticated && User.IsInRole("Employee"))
-        {
-            <td>
-                @using (Html.BeginForm("CreateApplication", "OpenPositions", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    @Html.Hidden("positionId", item.OpenPositionId)
-                    <input type="submit" value="Apply" />
-                }
-            </td>
-                }
-            
-    </tr>
+            @if (Request.IsAuthenticated && User.IsInRole("Employee"))
+            {
+                <td>
+                    @using (Html.BeginForm("CreateApplication", "OpenPositions", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("positionId", item.OpenPositionId)
+                        <input type="submit" value="Apply" />
+                    }
+                </td>
+            }
+
+        </tr>
     }
 
-</table>
+</table>*@
+
+<div class="pageTitleContainer">
+    <div class="pageTitle">Available Positions</div>
+</div>
+
+<div class="cardContainer">
+    @if (Request.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Manager")))
+    {
+        <div class="createContainer">
+            @Html.ActionLink("+", "Create", new { }, new { @class = "actionButton" })
+        </div>
+    }
+
+    
+    @foreach (var item in Model)
+    {
+        <div class="card">
+
+            <div class="roleName">
+                <b>@Html.DisplayFor(modelItem => item.Position.Title)</b>
+            </div>
+
+            <div class="flexSpaceBetween">
+                <div class="roleName">Store Number:</div>
+                <div>
+                    @Html.DisplayFor(modelItem => item.Location.StoreNumber)
+                </div>
+            </div>
+
+            <div class="cardActions">
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.OpenPositionId }, new { @class = "actionButton" })
+                    @Html.ActionLink("Details", "Details", new { id = item.OpenPositionId }, new { @class = "actionButton" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.OpenPositionId }, new { @class = "actionButton" })
+                    using (Html.BeginForm("CreateApplication", "OpenPositions", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("positionId", item.OpenPositionId)
+                        <input type="submit" value="Apply" class="applyButton" />
+                    }
+                }
+
+                @if (Request.IsAuthenticated && User.IsInRole("Manager"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.OpenPositionId }, new { @class = "actionButton" })
+                    @Html.ActionLink("Details", "Details", new { id = item.OpenPositionId }, new { @class = "actionButton" })
+                }
+
+                @if (Request.IsAuthenticated && User.IsInRole("Employee"))
+                {
+                    using (Html.BeginForm("CreateApplication", "OpenPositions", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("positionId", item.OpenPositionId)
+                        <input type="submit" value="Apply" class="applyButton" />
+                    }
+                }
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.OpenPositionId }, new { @class = "actionButton" })
+                @Html.ActionLink("Details", "Details", new { id = item.OpenPositionId }, new { @class = "actionButton" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.OpenPositionId }, new { @class = "actionButton" })
+                @using (Html.BeginForm("CreateApplication", "OpenPositions", FormMethod.Post))*@
+                @*{
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("positionId", item.OpenPositionId)
+                    <input type="submit" value="Apply" class="applyButton" />
+                }*@
+            </div>
+        </div>
+    }
+</div>

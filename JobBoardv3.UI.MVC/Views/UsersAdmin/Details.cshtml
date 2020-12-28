@@ -4,42 +4,37 @@
     ViewBag.Title = "Details";
 }
 
-<h2 class="topstyle">Details.</h2>
-
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-    </dl>
+<div class="pageTitleContainer">
+    <div class="pageTitle">@Html.DisplayFor(model => model.UserName)</div>
 </div>
-<h4>List of roles for this user</h4>
-@if (ViewBag.RoleNames.Count == 0)
-{
-    <hr />
-    <p>No roles found for this user.</p>
-}
 
-<table class="table">
+<div class="editUserContainer">
 
-    @foreach (var item in ViewBag.RoleNames)
+    <h4>List of roles for this user</h4>
+    @if (ViewBag.RoleNames.Count == 0)
     {
-        <tr>
-            <td>
-                @item
-            </td>
-        </tr>
+        <hr />
+        <p>No roles found for this user.</p>
     }
-</table>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
 
+    <table class="table">
 
+        @foreach (var item in ViewBag.RoleNames)
+        {
+            <tr>
+                <td>
+                    @item
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="editUserSaveContainer">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "actionButton" })
+    </div>
+    <div class="backButtonContainer">
+        @Html.ActionLink("Back to List", "Index", new { }, new { @class = "actionButton" })
+    </div>
+
+</div>
 

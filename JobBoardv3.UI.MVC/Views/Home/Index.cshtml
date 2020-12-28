@@ -10,28 +10,56 @@
     </div>
 </header>
 <!-- Page Content -->
-<div class="container">
+<style>
+
+    header {
+        z-index: 100;
+        width: 70vw;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 15px 15px 0 0;
+    }
+
+
+    .img-class {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: -2px;
+        z-index: -1;
+    }
+
+    .home-container {
+        background-color: white;
+        width: 70vw;
+
+    }
+</style>
+
+<img class="img-class" src="~/Content/produce.jpg" alt="">
+
+<div class="container home-container">
     <div class="row">
         <div class="col-md-8 mb-5">
             <h2>What We Do</h2>
             <hr>
-            <p>Tom's Grocers operates supermarkets under the Tom's Grocers banners in Vermont, Pennsylvania, and New Hampshire. We exist to help people feed and care for themselves and their families. As an innovative retailer of products and services, we recognize that consistently satisfying our customers is key to our success.</p>
+            <p>Tom's Grocers operates supermarkets under the Tom's Grocers banner in Vermont, Pennsylvania, and New Hampshire. We exist to help people feed and care for themselves and their families. As an innovative retailer of products and services, we recognize that consistently satisfying our customers is key to our success.</p>
             <p>
                 We are committed to serving our:
-               <ul>
-                   <li>
-                       Customers by providing an overall experience that earns their long-term loyalty.
-                   </li>
-                   <li>
-                       Teammates by fostering a challenging, culturally diverse, friendly, participative, and rewarding environment.
-                   </li>
-                   <li>
-                       Communities by working in partnership to enrich and improve their quality of life.
-                   </li>
-                   <li>
-                       Shareholders by delivering a fair return on investment over the long term.
-                   </li>
-               </ul> 
+                <ul>
+                    <li>
+                        Customers by providing an overall experience that earns their long-term loyalty.
+                    </li>
+                    <li>
+                        Teammates by fostering a challenging, culturally diverse, friendly, participative, and rewarding environment.
+                    </li>
+                    <li>
+                        Communities by working in partnership to enrich and improve their quality of life.
+                    </li>
+                    <li>
+                        Shareholders by delivering a fair return on investment over the long term.
+                    </li>
+                </ul>
                 We will always remember that Tom's Grocers exists both because of and for our teammates and the people we serve.
             </p>
         </div>
@@ -51,46 +79,48 @@
                 <abbr title="Email">E:</abbr>
                 <a href="mailto:#">tom@employer.com</a>
             </address>
+            <h4>Documentation</h4>
+            <a href="~/Content/Documentation/DamianLentzDocumentation.pdf" target="_blank" class="btn btn-fill wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.4s">Download<i class="fa fa-download"></i></a>
         </div>
     </div>
     <!-- /.row -->
     @*<div class="row">
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <img class="card-img-top" src="https://placehold.it/300x200" alt="">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Find Out More!</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <img class="card-img-top" src="https://placehold.it/300x200" alt="">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus totam ut praesentium aut.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Find Out More!</a>
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <img class="card-img-top" src="https://placehold.it/300x200" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary">Find Out More!</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <img class="card-img-top" src="https://placehold.it/300x200" alt="">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Find Out More!</a>
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <img class="card-img-top" src="https://placehold.it/300x200" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus totam ut praesentium aut.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary">Find Out More!</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>*@
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <img class="card-img-top" src="https://placehold.it/300x200" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary">Find Out More!</a>
+                    </div>
+                </div>
+            </div>
+        </div>*@
     <!-- /.row -->
 </div>

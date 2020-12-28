@@ -4,33 +4,25 @@
     ViewBag.Title = "Index";
 }
 
-<h2 class="topstyle">Users Admin</h2>
+<div class="pageTitleContainer">
+    <div class="pageTitle">User Admin</div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-
-        </th>
-    </tr>
-
+<div class="cardContainer">
+    <div class="createContainer">
+        @Html.ActionLink("+", "Create", new { }, new { @class = "actionButton" })
+    </div>
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
+        <div class="card">
+            <div class="roleName">
                 @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
+            </div>
+            <div class="cardActions">
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "actionButton" })
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "actionButton" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "actionButton" })
+            </div>
+        </div>
     }
-
-</table>
+</div>
